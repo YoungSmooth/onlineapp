@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "969331341522",
+    "project_id": "onlineapp-acfd1",
+    "storage_bucket": "onlineapp-acfd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:969331341522:android:f3d0cdceabdadbc4fb150b",
+        "android_client_info": {
+          "package_name": "com.blogspot.iamhumphrey.onlineapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "969331341522-atpfkkfmrjjkvoc9odst4anp9b4lcg1f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgWzqQjIg6lJRs1GMovTEcFBNUHkjVDyM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "969331341522-atpfkkfmrjjkvoc9odst4anp9b4lcg1f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
