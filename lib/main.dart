@@ -5,7 +5,6 @@ import 'package:onlineapp/views/login_views.dart';
 import 'package:onlineapp/views/register_view.dart';
 import 'package:onlineapp/views/verify_email_view.dart';
 import 'firebase_options.dart';
-import 'dart:developer' as devtools show log;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +18,7 @@ void main() {
       routes: {
         '/login/': ((context) => const LoginView()),
         '/register/': ((context) => const RegisterView()),
+        '/notes/': ((context) => const NotesView()),
       },
     ),
   );
@@ -105,8 +105,8 @@ Future<bool> showLogoutDialog(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: const Text('Sign out'),
-        content: const Text('Are you sure you want to sign out?'),
+        title: const Text('Logout'),
+        content: const Text('Are you sure you want to logout?'),
         actions: [
           TextButton(
             onPressed: () {
