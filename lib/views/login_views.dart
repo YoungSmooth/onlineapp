@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:onlineapp/constants/routes.dart';
+import 'package:onlineapp/services/auth/auth_exceptions.dart';
+import 'package:onlineapp/services/auth/auth_service.dart';
 import 'package:onlineapp/utilities/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
@@ -60,14 +60,12 @@ class _LoginViewState extends State<LoginView> {
               final email = _email.text;
               final password = _password.text;
               try {
-                Firebase.apps;
-                final userCredential =
-                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                await AuthService.firebase().logIn(
                   email: email,
                   password: password,
                 );
-                final user = FirebaseAuth.instance.currentUser;
-                if (user?.emailVerified ?? false) {
+                final user = AuthService.firebase().currentUser;
+                if (user?.isEmailVerified ?? false) {
                   Navigator.of(context).pushNamedAndRemoveUntil(
                     notesRoute,
                     (route) => false,
@@ -78,27 +76,20 @@ class _LoginViewState extends State<LoginView> {
                     (route) => false,
                   );
                 }
-              } on FirebaseAuthException catch (e) {
-                if (e.code == 'user-not-found') {
-                  await showErrorDialog(
-                    context,
-                    'This email is not registered',
-                  );
-                } else if (e.code == 'wrong-password') {
-                  await showErrorDialog(
-                    context,
-                    'You entered an invalid password',
-                  );
-                } else {
-                  await showErrorDialog(
-                    context,
-                    'Error: ${e.code}',
-                  );
-                }
-              } catch (e) {
+              } on UserNotFoundAuthException {
                 await showErrorDialog(
                   context,
-                  e.toString(),
+                  'This email is not registered',
+                );
+              } on WrongPasswordAuthException {
+                await showErrorDialog(
+                  context,
+                  'You entered an invalid password',
+                );
+              } on GenericAuthException {
+                await showErrorDialog(
+                  context,
+                  'Authentication error',
                 );
               }
             },
