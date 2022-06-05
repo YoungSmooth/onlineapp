@@ -12,7 +12,7 @@ void main() {
     MaterialApp(
       title: 'Onyion Loading',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.orange,
       ),
       home: const HomePage(),
       routes: {
