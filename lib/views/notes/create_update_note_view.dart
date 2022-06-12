@@ -3,7 +3,9 @@ import 'package:onlineapp/services/auth/auth_service.dart';
 import 'package:onlineapp/services/cloud/cloud_note.dart';
 import 'package:onlineapp/services/cloud/firebase_cloud_storage.dart';
 import 'package:onlineapp/services/cloud/cloud_storage_exceptions.dart';
+import 'package:onlineapp/utilities/dialogs/cannot_share_empty_note_dialog.dart';
 import 'package:onlineapp/utilities/generics/get_arguments.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sqflite/sqflite.dart';
 
 class CreateUpdateNoteView extends StatefulWidget {
@@ -91,7 +93,22 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('New Note')),
+      appBar: AppBar(
+        title: const Text('New Note'),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              final text = _textController.text;
+              if (_note == null || text.isEmpty) {
+                await showCannotShareEmptyNoteDialog(context);
+              } else {
+                Share.share(text);
+              }
+            },
+            icon: const Icon(Icons.share),
+          ),
+        ],
+      ),
       body: FutureBuilder(
         future: createOrGetExistingNote(context),
         builder: (context, snapshot) {
@@ -109,6 +126,36 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
               return const CircularProgressIndicator();
           }
         },
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.black45,
+        selectedFontSize: 15,
+        selectedIconTheme: IconThemeData(color: Colors.orange, size: 20),
+        selectedItemColor: Colors.orange,
+        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.delete_forever_outlined,
+              size: 20,
+            ),
+            label: 'Delete',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.image,
+              size: 20,
+            ),
+            label: 'Add image',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.share_sharp,
+              size: 20,
+            ),
+            label: 'Share',
+          ),
+        ],
       ),
     );
   }
