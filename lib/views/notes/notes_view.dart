@@ -29,7 +29,7 @@ class _NotesViewState extends State<NotesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your Notes'),
+        title: const Text("Humphrey's Notes"),
         actions: [
           IconButton(
               onPressed: () {
@@ -88,6 +88,35 @@ class _NotesViewState extends State<NotesView> {
               return const CircularProgressIndicator();
           }
         },
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        selectedFontSize: 15,
+        selectedIconTheme: IconThemeData(color: Colors.orange, size: 20),
+        selectedItemColor: Colors.orange,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.business_center_rounded,
+              size: 20,
+            ),
+            label: 'Business',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.contact_phone_outlined,
+              size: 20,
+            ),
+            label: 'Contact',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.settings_accessibility_rounded,
+              size: 20,
+            ),
+            label: 'Share',
+          ),
+        ],
       ),
     );
   }
