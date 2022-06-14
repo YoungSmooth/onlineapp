@@ -130,8 +130,8 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         selectedFontSize: 15,
-        selectedIconTheme: IconThemeData(color: Colors.orange, size: 20),
-        selectedItemColor: Colors.orange,
+        selectedIconTheme: IconThemeData(color: Colors.lightBlue, size: 20),
+        selectedItemColor: Colors.lightBlue,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
