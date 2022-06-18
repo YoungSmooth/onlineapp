@@ -58,8 +58,8 @@ void main() {
       expect(user.isEmailVerified, false);
     });
 
-    test('Logged in user should be able to get verified', () {
-      provider.sendEmailVerification();
+    test('Logged in user should be able to get verified', () async {
+      await provider.sendEmailVerification();
       final user = provider.currentUser;
       expect(user, isNotNull);
       expect(user!.isEmailVerified, true);
@@ -73,6 +73,12 @@ void main() {
       );
       final user = provider.currentUser;
       expect(user, isNotNull);
+    });
+
+    test('should be able to confirm email before send forgot password',
+        () async {
+      await provider.initialize();
+      expect(user!.isEmailVerified, true);
     });
   });
 }
@@ -116,7 +122,7 @@ class MockAuthProvider implements AuthProvider {
     if (password == 'foobar') throw WrongPasswordAuthException();
     const user = AuthUser(
       id: 'my_id',
-      isEmailVerified: false,
+      isEmailVerified: true,
       email: 'foo@bar.com',
     );
     _user = user;
@@ -142,5 +148,18 @@ class MockAuthProvider implements AuthProvider {
       email: 'foo@bar.com',
     );
     _user = newUser;
+  }
+
+  @override
+  Future<void> sendPasswordReset({required String toEmail}) async {
+    if (!isInitialized) throw NotInitializedException();
+    await Future.delayed(const Duration(seconds: 1));
+    const user = AuthUser(
+      id: 'my_id',
+      isEmailVerified: true,
+      email: 'foo@bar.com',
+    );
+    _user = user;
+    return Future.value();
   }
 }
