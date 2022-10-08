@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:onlineapp/services/auth/auth_service.dart';
 import 'package:onlineapp/services/cloud/cloud_note.dart';
 import 'package:onlineapp/services/cloud/firebase_cloud_storage.dart';
-import 'package:onlineapp/services/cloud/cloud_storage_exceptions.dart';
 import 'package:onlineapp/utilities/dialogs/cannot_share_empty_note_dialog.dart';
 import 'package:onlineapp/utilities/generics/get_arguments.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:sqflite/sqflite.dart';
 
 class CreateUpdateNoteView extends StatefulWidget {
   const CreateUpdateNoteView({Key? key}) : super(key: key);
@@ -94,7 +92,13 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New Note'),
+        centerTitle: true,
+        title: const Text(
+          'Note',
+          style: TextStyle(color: Colors.black54, fontSize: 15),
+        ),
+        elevation: 0.1,
+        backgroundColor: Colors.white,
         actions: [
           IconButton(
             onPressed: () async {
@@ -121,8 +125,13 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                   controller: _textController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
-                  decoration:
-                      const InputDecoration(hintText: 'You can type here...'),
+                  autofocus: true,
+                  autocorrect: true,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    // border: UnderlineInputBorder(),
+                    hintText: 'You can type here...',
+                  ),
                 ),
               );
             default:

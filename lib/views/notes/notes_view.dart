@@ -7,7 +7,6 @@ import 'package:onlineapp/services/cloud/firebase_cloud_storage.dart';
 import 'package:onlineapp/utilities/dialogs/logout_dialog.dart';
 import 'package:onlineapp/views/notes/notes_list_view.dart';
 import '../../constants/routes.dart';
-import '../../enums/menu_action.dart';
 import '../../services/auth/auth_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' show ReadContext;
 
@@ -22,6 +21,8 @@ class _NotesViewState extends State<NotesView> {
   late final FirebaseCloudStorage _notesService;
   String get userId => AuthService.firebase().currentUser!.id;
 
+  get icon => Icons.add;
+
   @override
   void initState() {
     _notesService = FirebaseCloudStorage();
@@ -31,42 +32,74 @@ class _NotesViewState extends State<NotesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      extendBody: true,
       appBar: AppBar(
-        title: const Text("Humphrey's Notes",
-            style: TextStyle(
-              fontSize: 18,
-              fontFamily: 'costa',
-              fontWeight: FontWeight.bold,
-            )),
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(createOrUpdateNoteRoute);
-              },
-              icon: const Icon(Icons.add)),
-          PopupMenuButton<MenuAction>(
-            onSelected: (value) async {
-              switch (value) {
-                case MenuAction.Logout:
-                  final shouldLogout = await showLogoutDialog(context);
-                  if (shouldLogout) {
-                    context.read<AuthBloc>().add(
-                          const AuthEventLogOut(),
-                        );
-                  }
-              }
-            },
-            itemBuilder: (context) {
-              return const [
-                PopupMenuItem<MenuAction>(
-                  value: MenuAction.Logout,
-                  child: Text('Logout'),
+        backgroundColor: Colors.white,
+        title: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey.shade300, width: 2),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 13),
+                  child: SizedBox(
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Colors.redAccent),
+                      child: const Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ),
-              ];
-            },
-          )
-        ],
+                const Padding(
+                  padding: EdgeInsets.all(14.0),
+                  child: Text(
+                    "Search notes",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black38,
+                      fontFamily: 'costa',
+                    ),
+                  ),
+                ),
+                PopupMenuButton<MenuAction>(
+                  onSelected: (value) async {
+                    switch (value) {
+                      case MenuAction.Logout:
+                        final shouldLogout = await showLogoutDialog(context);
+                        if (shouldLogout) {
+                          context.read<AuthBloc>().add(
+                                const AuthEventLogOut(),
+                              );
+                        }
+                    }
+                  },
+                  itemBuilder: (context) {
+                    return const [
+                      PopupMenuItem<MenuAction>(
+                        value: MenuAction.Logout,
+                        child: Text('Logout'),
+                      ),
+                    ];
+                  },
+                )
+              ],
+            ),
+          ),
+        ),
+        centerTitle: true,
+        elevation: 0,
+        titleSpacing: 3,
       ),
       body: StreamBuilder(
         stream: _notesService.allNotes(ownerUserId: userId),
@@ -96,34 +129,16 @@ class _NotesViewState extends State<NotesView> {
           }
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        selectedFontSize: 15,
-        selectedIconTheme: IconThemeData(color: Colors.lightBlue, size: 20),
-        selectedItemColor: Colors.lightBlue,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.business_center_rounded,
-              size: 20,
-            ),
-            label: 'Business',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.contact_phone_outlined,
-              size: 20,
-            ),
-            label: 'Contact',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.settings_accessibility_rounded,
-              size: 20,
-            ),
-            label: 'Share',
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed(createOrUpdateNoteRoute);
+        },
+        child: const Icon(
+          Icons.add,
+          size: 20,
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.black54,
       ),
     );
   }
