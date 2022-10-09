@@ -63,7 +63,7 @@ class HomePage extends StatelessWidget {
           return const RegisterView();
         } else {
           return Scaffold(
-            backgroundColor: Colors.grey,
+            backgroundColor: Colors.white,
             body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

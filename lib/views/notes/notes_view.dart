@@ -40,8 +40,9 @@ class _NotesViewState extends State<NotesView> {
           padding: const EdgeInsets.all(15),
           child: Container(
             decoration: BoxDecoration(
+              color: Colors.blue.shade100,
               border: Border.all(color: Colors.grey.shade300, width: 2),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(25),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,7 +53,7 @@ class _NotesViewState extends State<NotesView> {
                     child: Container(
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
+                          borderRadius: BorderRadius.circular(30),
                           color: Colors.redAccent),
                       child: const Icon(
                         Icons.search,
