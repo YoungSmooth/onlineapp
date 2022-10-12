@@ -37,10 +37,11 @@ class _NotesViewState extends State<NotesView> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Padding(
-          padding: const EdgeInsets.all(15),
+          padding:
+              const EdgeInsets.only(left: 20, right: 20, top: 8, bottom: 8),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.blue.shade100,
+              color: Colors.grey.shade200,
               border: Border.all(color: Colors.grey.shade300, width: 2),
               borderRadius: BorderRadius.circular(25),
             ),

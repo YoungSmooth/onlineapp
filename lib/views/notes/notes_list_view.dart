@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:onlineapp/services/cloud/cloud_note.dart';
 import 'package:onlineapp/utilities/dialogs/delete_dialog.dart';
+import 'package:intl/intl.dart';
 
 typedef NoteCallback = void Function(CloudNote note);
 
@@ -50,7 +51,7 @@ class NotesListView extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 subtitle: Text(
-                  DateTime.now().toString(),
+                  DateFormat('dd/MM/yyyy').format(DateTime.now()),
                   style: const TextStyle(fontSize: 12),
                 ),
                 trailing: IconButton(
@@ -60,8 +61,14 @@ class NotesListView extends StatelessWidget {
                       onDeleteNote(note);
                     }
                   },
-                  icon: const Icon(Icons.delete_forever_rounded,
-                      color: Colors.black38),
+                  icon: Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: Colors.grey.shade200),
+                    child: const Icon(Icons.delete_forever_rounded,
+                        color: Colors.black38),
+                  ),
                 ),
               ),
             ),

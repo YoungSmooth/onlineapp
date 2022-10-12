@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onlineapp/constants/routes.dart';
 import 'package:onlineapp/helpers/loading/loading_screen.dart';
@@ -15,6 +16,11 @@ import 'package:onlineapp/views/verify_email_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.white,
+  ));
+
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
   runApp(
     MaterialApp(
       title: 'My Notes',
